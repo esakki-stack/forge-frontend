@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge Complaint Portal — Smart Grievance Redressal System</title>
+    <meta name="description" content="Official Forge Complaint & Grievance Redressal Portal. Lodge complaints, track real-time resolution status, and streamline dispute management with verified security.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <div class="auth-wrapper">
+        <!-- Main Card Container -->
+        <main class="auth-card">
+            
+            <!-- Left Panel: Hero Graphics & Branding -->
+            <aside class="auth-hero">
+                <div class="hero-bg-overlay"></div>
+                <img src="assets/hero_bg.jpg" alt="Forge Complaint Portal Illustration" class="hero-img">
+                <div class="hero-content">
+                    <div class="brand-badge">
+                        <span class="pulse-dot"></span>
+                        <span>Forge Redressal 2.0</span>
+                    </div>
+                    <h1 class="hero-title">Swift, Transparent & Reliable Complaint Redressal.</h1>
+                    <p class="hero-description">Lodge grievances, monitor real-time resolution milestones, and ensure accountability with end-to-end encrypted tracking.</p>
+                    
+                    <div class="hero-footer">
+                        <div class="hero-stat">
+                            <span class="stat-num">98.6%</span>
+                            <span class="stat-lbl">Resolution Rate</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="hero-stat">
+                            <span class="stat-num">&lt; 24h</span>
+                            <span class="stat-lbl">SLA Response</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Panel: Auth Forms -->
+            <section class="auth-form-section">
+                <!-- Top Navigation & Controls -->
+                <header class="auth-header">
+                    <div class="brand-logo">
+                        <div class="logo-icon">
+                            <i class="fa-solid fa-fire-flame-curved"></i>
+                        </div>
+                        <span class="logo-text">Forge<span class="accent-text">.</span><span class="portal-tag">Complaints</span></span>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <button id="theme-toggle" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+                            <i class="fa-solid fa-moon moon-icon"></i>
+                            <i class="fa-solid fa-sun sun-icon"></i>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Navigation Tabs -->
+                <nav class="auth-tabs" aria-label="Authentication Options">
+                    <button id="tab-login" class="tab-btn active" onclick="switchTab('login')">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <span>Log In</span>
+                    </button>
+                    <button id="tab-register" class="tab-btn" onclick="switchTab('register')">
+                        <i class="fa-solid fa-file-circle-plus"></i>
+                        <span>File / Register</span>
+                    </button>
+                    <div class="tab-indicator" id="tab-indicator"></div>
+                </nav>
+
+                <!-- Form Views Container -->
+                <div class="forms-container">
+                    
+                    <!-- 1. LOGIN FORM -->
+                    <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)" novalidate>
+                        <div class="form-intro">
+                            <h2>Sign In to Portal</h2>
+                            <p>Enter your credentials to manage or track your complaint tickets.</p>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="login-username">Username, Email or Ticket ID</label>
+                            <div class="input-wrapper">
+                                <i class="input-icon fa-regular fa-user"></i>
+                                <input type="text" id="login-username" name="username" placeholder="e.g. alex_morgan or CP-40915" required autocomplete="username">
+                            </div>
+                            <span class="error-msg" id="login-username-err"></span>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label for="login-password">Password</label>
+                                <a href="#" class="forgot-link" onclick="handleForgotPassword(event)">Forgot password?</a>
+                            </div>
+                            <div class="input-wrapper">
+                                <i class="input-icon fa-solid fa-lock"></i>
+                                <input type="password" id="login-password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('login-password', this)" aria-label="Toggle password visibility">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                            <span class="error-msg" id="login-password-err"></span>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="remember-me">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Keep me signed in for 30 days</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="login-submit-btn">
+                            <span class="btn-text">Access Complaint Desk</span>
+                            <i class="fa-solid fa-arrow-right btn-icon"></i>
+                            <div class="spinner"></div>
+                        </button>
+
+                        <div class="form-footer">
+                            <p>Need to register a grievance? <button type="button" class="switch-link" onclick="switchTab('register')">Create Complainant Profile</button></p>
+                        </div>
+                    </form>
+
+                    <!-- 2. CREATE ACCOUNT FORM -->
+                    <form id="register-form" class="auth-form" onsubmit="handleRegister(event)" novalidate>
+                        <div class="form-intro">
+                            <h2>Register Complainant Profile</h2>
+                            <p>Create your verified profile to lodge grievances and receive instant updates.</p>
+                        </div>
+
+                        <!-- First Name & Last Name in 2 Columns -->
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="reg-firstname">First Name</label>
+                                <div class="input-wrapper">
+                                    <i class="input-icon fa-regular fa-id-card"></i>
+                                    <input type="text" id="reg-firstname" name="firstname" placeholder="Alex" required autocomplete="given-name">
+                                </div>
+                                <span class="error-msg" id="reg-firstname-err"></span>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="reg-lastname">Last Name</label>
+                                <div class="input-wrapper">
+                                    <i class="input-icon fa-regular fa-id-card"></i>
+                                    <input type="text" id="reg-lastname" name="lastname" placeholder="Morgan" required autocomplete="family-name">
+                                </div>
+                                <span class="error-msg" id="reg-lastname-err"></span>
+                            </div>
+                        </div>
+
+                        <!-- Username -->
+                        <div class="input-group">
+                            <label for="reg-username">Complainant Handle / Username</label>
+                            <div class="input-wrapper">
+                                <i class="input-icon fa-regular fa-at"></i>
+                                <input type="text" id="reg-username" name="username" placeholder="alex_morgan" required autocomplete="username">
+                            </div>
+                            <span class="error-msg" id="reg-username-err"></span>
+                        </div>
+
+                        <!-- Password with Strength Meter -->
+                        <div class="input-group">
+                            <label for="reg-password">Secure Password</label>
+                            <div class="input-wrapper">
+                                <i class="input-icon fa-solid fa-lock"></i>
+                                <input type="password" id="reg-password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
+                                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('reg-password', this)" aria-label="Toggle password visibility">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                            <span class="error-msg" id="reg-password-err"></span>
+
+                            <!-- Password Strength Indicator Component -->
+                            <div class="password-strength-box" id="strength-box">
+                                <div class="strength-header">
+                                    <span class="strength-title">Password Strength:</span>
+                                    <span class="strength-label" id="strength-label">Enter Password</span>
+                                </div>
+                                <div class="strength-meter">
+                                    <div class="meter-bar" id="bar-1"></div>
+                                    <div class="meter-bar" id="bar-2"></div>
+                                    <div class="meter-bar" id="bar-3"></div>
+                                    <div class="meter-bar" id="bar-4"></div>
+                                </div>
+
+                                <!-- Password Checklist -->
+                                <ul class="strength-checklist" id="strength-checklist">
+                                    <li id="rule-length" class="rule-item">
+                                        <i class="rule-icon fa-solid fa-circle-xmark"></i>
+                                        <span>At least 8 characters long</span>
+                                    </li>
+                                    <li id="rule-uppercase" class="rule-item">
+                                        <i class="rule-icon fa-solid fa-circle-xmark"></i>
+                                        <span>One uppercase letter (A-Z)</span>
+                                    </li>
+                                    <li id="rule-lowercase" class="rule-item">
+                                        <i class="rule-icon fa-solid fa-circle-xmark"></i>
+                                        <span>One lowercase letter (a-z)</span>
+                                    </li>
+                                    <li id="rule-number" class="rule-item">
+                                        <i class="rule-icon fa-solid fa-circle-xmark"></i>
+                                        <span>One number (0-9)</span>
+                                    </li>
+                                    <li id="rule-special" class="rule-item">
+                                        <i class="rule-icon fa-solid fa-circle-xmark"></i>
+                                        <span>One special symbol (!@#$%^&*)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="input-group">
+                            <label for="reg-confirm-password">Confirm Password</label>
+                            <div class="input-wrapper">
+                                <i class="input-icon fa-solid fa-shield"></i>
+                                <input type="password" id="reg-confirm-password" name="confirmPassword" placeholder="Repeat your password" required autocomplete="new-password">
+                                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('reg-confirm-password', this)" aria-label="Toggle password visibility">
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="match-status" id="match-status"></div>
+                            <span class="error-msg" id="reg-confirm-err"></span>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="terms-agree" required>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">I agree to the <a href="#" onclick="showTermsModal(event)">Grievance Charter</a> & <a href="#" onclick="showTermsModal(event)">Resolution Policy</a></span>
+                            </label>
+                            <span class="error-msg" id="terms-err"></span>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="register-submit-btn">
+                            <span class="btn-text">Create Complainant Profile</span>
+                            <i class="fa-solid fa-file-shield btn-icon"></i>
+                            <div class="spinner"></div>
+                        </button>
+
+                        <div class="form-footer">
+                            <p>Already have an account? <button type="button" class="switch-link" onclick="switchTab('login')">Log In to Portal</button></p>
+                        </div>
+                    </form>
+
+                    <!-- 3. SUCCESS / DASHBOARD DEMO VIEW -->
+                    <div id="success-view" class="auth-form success-card">
+                        <div class="success-icon-wrapper">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <h2 id="success-title">Portal Access Granted</h2>
+                        <p id="success-message">You have successfully authenticated into Forge Complaint Portal.</p>
+                        
+                        <div class="user-badge-card">
+                            <div class="user-avatar" id="user-avatar-initials">AM</div>
+                            <div class="user-details">
+                                <span class="user-name" id="user-display-name">Alex Morgan</span>
+                                <span class="user-handle" id="user-display-username">@alex_morgan</span>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="submit-btn" onclick="showToast('Connecting to Forge Complaint Desk...', 'success')">
+                                <span>Open Complaint Desk</span>
+                                <i class="fa-solid fa-gauge-high"></i>
+                            </button>
+                            <button class="secondary-btn" onclick="handleLogout()">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Terms -->
+    <div id="terms-modal" class="modal-overlay" onclick="closeTermsModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Forge Grievance Charter & Resolution Policy</h3>
+                <button class="close-btn" onclick="closeTermsModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Welcome to the <strong>Forge Complaint Portal</strong>. This portal provides an impartial, transparent, and prompt grievance redressal channel for all registered users and citizens.</p>
+                <h4>Complaint SLA & Escalation</h4>
+                <p>Every logged ticket is timestamped and assigned to a designated grievance officer. Initial acknowledgment is processed within 4 hours, and standard resolution updates are delivered within 24 to 48 hours.</p>
+                <h4>Data Integrity & Privacy</h4>
+                <p>All complaint statements and supporting evidence documents are secured with 256-bit encryption. Whistleblower privacy and complainant identity safeguards are strictly enforced.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="submit-btn" onclick="closeTermsModal()">I Understand</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
